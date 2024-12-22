@@ -1,0 +1,26 @@
+.gradient-home {
+    background: linear-gradient(90deg, #30353e 0%, #6a6f85 100%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.start-code-btn {
+    background-color: #ec3360 !important;
+    color: white !important;
+    border: #ec3360;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    transition: background-color 0.3s ease-in-out !important;
+}
+
+.start-code-btn:hover {
+    background-color: darkred;
+    color: white;
+}
+
