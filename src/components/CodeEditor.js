@@ -11,6 +11,8 @@ const CodeEditor = () => {
     const { id } = useParams(); // Room ID
     const [content, setContent] = useState('');
     const [language, setLanguage] = useState('javascript');
+    const [isConnected, setIsConnected] = useState(true); // Track connection status
+    const [isDisconnected, setIsDisconnected] = useState(false); // Track disconnection state
     const languageExtensions = {
         javascript: javascript(),
         python: python(),
@@ -50,13 +52,33 @@ const CodeEditor = () => {
             setContent(updatedContent); // Update the editor content
         });
 
+        // Track socket connection and disconnection
+        socket.on('connect', () => {
+            console.log('Connected to the server');
+            console.log(`Joining room: ${id}`);
+            socket.emit('join', id);
+            fetchData();
+            setIsConnected(true);
+            setIsDisconnected(false);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from the server');
+            setIsConnected(false);
+            setIsDisconnected(true);
+        });
+
         return () => {
             console.log('Cleaning up socket listeners...');
             socket.off('text-change');
+            socket.off('connect');
+            socket.off('disconnect');
         };
     }, [id]);
 
     const handleContentChange = (value) => {
+        if (!isConnected) return; // Prevent changes if disconnected
+
         setContent(value);
 
         // Emit changes to other clients
@@ -83,17 +105,51 @@ const CodeEditor = () => {
         });
     };
 
+    const handleReconnect = () => {
+        console.log(`Reconnecting to room: ${id}`);
+        socket.connect(); // Reconnect the socket
+        setIsDisconnected(false); // Hide disconnection message
+    };
+
     return (
         <div style={{ padding: '20px' }}>
-            <select value={language} onChange={handleLanguageChange}>
+            {isDisconnected && (
+                <div
+                    style={{
+                        backgroundColor: 'red',
+                        color: 'white',
+                        padding: '10px',
+                        textAlign: 'center',
+                    }}
+                >
+                    <strong>You are disconnected. Please reconnect to continue.</strong>
+                    <button
+                        onClick={handleReconnect}
+                        style={{
+                            marginLeft: '10px',
+                            padding: '5px 10px',
+                            backgroundColor: '#fff',
+                            color: '#000',
+                            border: '1px solid #ccc',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        Reconnect
+                    </button>
+                </div>
+            )}
+
+            <select value={language} onChange={handleLanguageChange} disabled={!isConnected}>
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
             </select>
+
             <CodeMirror
                 value={content}
                 extensions={[languageExtensions[language]]}
                 onChange={(value) => handleContentChange(value)}
                 height="400px"
+                editable={isConnected} // Disable editing if not connected
             />
         </div>
     );
