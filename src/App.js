@@ -5,6 +5,7 @@ import CodeEditor from './components/CodeEditor';
 import NavBar from './components/NavBar';
 import About from './components/About';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/:id" element={<CodeEditor />} />
             </Routes>
+            <Footer/>
         </Router>
     );
 };

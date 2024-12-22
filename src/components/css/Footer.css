@@ -1,0 +1,16 @@
+/* Footer styling */
+.footer {
+    background: linear-gradient(90deg, #30353e 0%, #6a6f85 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+}
