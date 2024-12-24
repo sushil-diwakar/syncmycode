@@ -5,7 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 
-const socket = io('https://syncmycode-server.onrender.com'); // Connect to backend
+const socket = io(`${process.env.REACT_APP_API_URL}`); // Connect to backend
 
 const CodeEditor = () => {
     const { id } = useParams(); // Room ID
@@ -22,14 +22,14 @@ const CodeEditor = () => {
         // Fetch content from the backend
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://syncmycode-server.onrender.com/api/code/${id}`);
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setContent(data.content);
                     setLanguage(data.language || 'javascript');
                 } else {
                     console.log('No existing content, initializing...');
-                    await fetch('https://syncmycode-server.onrender.com/api/code/create', {
+                    await fetch(`${process.env.REACT_APP_API_URL}/api/code/create`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id, content: '', language: 'javascript' }),
@@ -86,7 +86,7 @@ const CodeEditor = () => {
         socket.emit('edit', { roomId: id, content: value });
 
         // Save to backend
-        fetch(`https://syncmycode-server.onrender.com/api/code/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: value, language }),
@@ -98,7 +98,7 @@ const CodeEditor = () => {
         setLanguage(newLanguage);
 
         // Save language to backend
-        fetch(`https://syncmycode-server.onrender.com/api/code/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content, language: newLanguage }),
