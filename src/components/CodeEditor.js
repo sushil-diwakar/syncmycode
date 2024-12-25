@@ -5,7 +5,9 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 
-const socket = io(`${process.env.REACT_APP_API_URL}`); // Connect to backend
+const socket = io(`${process.env.REACT_APP_API_URL}`, {
+    transports: ['websocket'],  // Force WebSocket transport
+}); 
 
 const CodeEditor = () => {
     const { id } = useParams(); // Room ID
