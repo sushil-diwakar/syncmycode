@@ -24,14 +24,14 @@ const CodeEditor = () => {
         // Fetch content from the backend
         const fetchData = async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`);
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/v1/code/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setContent(data.content);
                     setLanguage(data.language || 'javascript');
                 } else {
                     console.log('No existing content, initializing...');
-                    await fetch(`${process.env.REACT_APP_API_URL}/api/code/create`, {
+                    await fetch(`${process.env.REACT_APP_API_URL}/v1/code/create`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id, content: '', language: 'javascript' }),
@@ -88,7 +88,7 @@ const CodeEditor = () => {
         socket.emit('edit', { roomId: id, content: value });
 
         // Save to backend
-        fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/v1/code/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content: value, language }),
@@ -100,7 +100,7 @@ const CodeEditor = () => {
         setLanguage(newLanguage);
 
         // Save language to backend
-        fetch(`${process.env.REACT_APP_API_URL}/api/code/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/v1/code/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content, language: newLanguage }),
