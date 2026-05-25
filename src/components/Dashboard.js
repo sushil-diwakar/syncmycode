@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '../context/AuthContext';
+import { getApiUrl } from '../../lib/api';
 import './css/Dashboard.css';
 
 const languageColors = {
@@ -39,7 +40,7 @@ const Dashboard = () => {
         }
     }, [token, router]);
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const API_URL = getApiUrl();
 
     const fetchUserCodes = useCallback(async () => {
         try {

@@ -11,8 +11,7 @@ import { java } from '@codemirror/lang-java';
 import { sql } from '@codemirror/lang-sql';
 import { AuthContext } from '../context/AuthContext';
 import { getSocket } from '../../lib/socket';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { getApiUrl } from '../../lib/api';
 
 const CodeEditor = ({ id }) => {
     const { user } = useContext(AuthContext);
@@ -77,7 +76,7 @@ const CodeEditor = ({ id }) => {
 
         const fetchSessionDetails = async () => {
             try {
-                const response = await fetch(`${API_URL}/v1/code/${id}`);
+                const response = await fetch(`${getApiUrl()}/v1/code/${id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setContent(data.content);
@@ -86,7 +85,7 @@ const CodeEditor = ({ id }) => {
                     setCreator(data.creator);
                 } else {
                     console.log('Session not found, creating a new session...');
-                    await fetch(`${API_URL}/v1/code/create`, {
+                    await fetch(`${getApiUrl()}/v1/code/create`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ id, content: '', language: 'javascript', title: 'Shared Workspace' }),
@@ -164,7 +163,7 @@ const CodeEditor = ({ id }) => {
         }
 
         saveTimeoutRef.current = setTimeout(() => {
-            fetch(`${API_URL}/v1/code/${id}`, {
+            fetch(`${getApiUrl()}/v1/code/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ content: value, language }),
@@ -183,7 +182,7 @@ const CodeEditor = ({ id }) => {
 
         socketRef.current.emit('language-change', { roomId: id, language: newLanguage });
 
-        fetch(`${API_URL}/v1/code/${id}`, {
+        fetch(`${getApiUrl()}/v1/code/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ content, language: newLanguage }),

@@ -1,8 +1,7 @@
 'use client';
 
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { getApiUrl } from '../../lib/api';
 
 export const AuthContext = createContext();
 
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
         const loadUser = async () => {
             try {
-                const res = await fetch(`${API_URL}/v1/auth/me`, {
+                const res = await fetch(`${getApiUrl()}/v1/auth/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -62,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     const signup = async (username, email, password) => {
         setError(null);
         try {
-            const res = await fetch(`${API_URL}/v1/auth/signup`, {
+            const res = await fetch(`${getApiUrl()}/v1/auth/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password }),
@@ -89,7 +88,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         setError(null);
         try {
-            const res = await fetch(`${API_URL}/v1/auth/login`, {
+            const res = await fetch(`${getApiUrl()}/v1/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),

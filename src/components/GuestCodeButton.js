@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+import { getApiUrl } from '../../lib/api';
 
 const GuestCodeButton = () => {
     const [actionLoading, setActionLoading] = useState(false);
@@ -23,7 +22,7 @@ const GuestCodeButton = () => {
         const uniqueId = generateUniqueId();
 
         try {
-            const res = await fetch(`${API_URL}/v1/code/create`, {
+            const res = await fetch(`${getApiUrl()}/v1/code/create`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
