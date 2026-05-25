@@ -1,0 +1,123 @@
+.custom-navbar {
+    background: rgba(10, 14, 26, 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.light-theme .custom-navbar {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.logo-icon-wrap {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 10px var(--accent-primary-glow);
+}
+
+.logo-text {
+    font-weight: 800;
+    background: linear-gradient(to right, #ffffff, #d1d5db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+}
+
+body.light-theme .logo-text {
+    background: linear-gradient(to right, #0f172a, #334155);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 550;
+    font-size: 0.95rem;
+    transition: color 0.2s ease !important;
+}
+
+.nav-link:hover {
+    color: var(--text-primary) !important;
+}
+
+.avatar-bubble {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 6px var(--accent-primary-glow);
+}
+
+.hover-danger-text:hover {
+    color: var(--error) !important;
+}
+
+/* Theme Toggle Button styles */
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-radius: 50% !important;
+    width: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: background 0.2s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    transform: rotate(20deg) scale(1.08) !important;
+}
+
+body.light-theme .theme-toggle-btn {
+    background: rgba(15, 23, 42, 0.06) !important;
+}
+
+body.light-theme .theme-toggle-btn:hover {
+    background: rgba(15, 23, 42, 0.12) !important;
+    transform: rotate(20deg) scale(1.08) !important;
+}
+
+/* Mobile collapse animation (no Bootstrap JS dependency) */
+.navbar-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar-collapse.show {
+    max-height: 2000px;
+    overflow: visible;
+    opacity: 1;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+@media (min-width: 992px) {
+    .navbar-collapse {
+        max-height: none !important;
+        overflow: visible !important;
+        opacity: 1 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}

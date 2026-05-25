@@ -1,0 +1,63 @@
+.landing-wrapper {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+.min-vh-75 {
+    min-height: 70vh;
+}
+
+/* Dots for the mock window code bar */
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.bg-danger {
+    background-color: #ef4444 !important;
+}
+
+.dot.bg-warning {
+    background-color: #f59e0b !important;
+}
+
+.dot.bg-success {
+    background-color: #10b981 !important;
+}
+
+/* Glowing mock editor */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+    50% {
+        box-shadow: 0 8px 36px 4px rgba(168, 85, 247, 0.25);
+        border-color: rgba(168, 85, 247, 0.25);
+    }
+    100% {
+        box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulseGlow 5s infinite ease-in-out;
+}
+
+/* Border highlighting features */
+.border-hover {
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.border-hover:hover {
+    transform: translateY(-5px);
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+}

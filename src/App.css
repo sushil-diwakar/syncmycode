@@ -1,0 +1,17 @@
+/* Ensure body and html take full height */
+html, body {
+  height: 100%; /* Ensure the body and html elements take full height */
+  margin: 0; /* Remove default margin */
+}
+
+/* Make the main wrapper a flex container */
+.app-container {
+  display: flex;
+  flex-direction: column; /* Stack the content vertically */
+  height: 100%; /* Full height of the viewport */
+}
+
+/* Main content takes up remaining space */
+.main-content {
+  flex-grow: 1; /* Takes up all the available space */
+}
